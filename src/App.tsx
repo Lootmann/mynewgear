@@ -6,7 +6,7 @@ import Counter from "./counter/Counter.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename="/mynewgear">
       <main className="h-full bg-neutral-900 text-neutral-200">
         <Routes>
           <Route path="/" element={<Main />}></Route>

@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.GITHUB_PAGES ? "/mynewgear/" : "./",
+  //base: process.env.GITHUB_PAGES ? "/mynewgear/" : "./",
+  base: "/mynewgear/",
   plugins: [react(), tailwindcss()],
 });
