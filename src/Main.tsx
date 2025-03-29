@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 
+const button = `rounded-md border-2 px-2
+  hover:bg-neutral-200 hover:text-neutral-900
+  transition ease-in delay-10`;
+
 function Main() {
   return (
     <>
@@ -8,10 +12,8 @@ function Main() {
       </header>
 
       <div className="p-4">
-        <p>hello world :D</p>
-
         <Link to="/counter">
-          <button className="rounded-md border-2 px-2">Link to Counter</button>
+          <button className={button}>Link to Counter</button>
         </Link>
       </div>
     </>
