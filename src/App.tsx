@@ -1,15 +1,18 @@
-function App() {
-  return (
-    <div className="h-full bg-neutral-900 text-neutral-200">
-      <header className="flex justify-center border-b-neutral-500 border-b-2">
-        <h1 className="text-3xl py-4">Hello World :D</h1>
-      </header>
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./Main.tsx";
+import Counter from "./counter/Counter.tsx";
 
-      <div className=" p-10">
-        <p>hello world</p>
-      </div>
-    </div>
-  );
-}
-
-export default App;
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <main className="h-full bg-neutral-900 text-neutral-200">
+        <Routes>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/counter" element={<Counter />}></Route>
+        </Routes>
+      </main>
+    </BrowserRouter>
+  </StrictMode>
+);
