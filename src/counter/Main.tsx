@@ -27,7 +27,7 @@ export default function Main() {
   function addCounter() {
     setCounters([
       ...counters,
-      { key: uuidv4(), total: 3, success: 1, input: "" },
+      { key: uuidv4(), total: 0, success: 0, input: "" },
     ]);
   }
 
