@@ -9,7 +9,6 @@ const button = `border-2 px-2 rounded-md`;
 export default function Main() {
   // load counters from localstorage
   const storageId = "my-awesome-counter-bro";
-
   const [counters, setCounters] = React.useState<CounterType[]>(() => {
     const raw = localStorage.getItem(storageId) ?? "[]";
     return JSON.parse(raw);
@@ -18,7 +17,6 @@ export default function Main() {
   // save counters to localstorage
   React.useEffect(() => {
     const timer = setInterval(() => {
-      console.log("*** Save");
       localStorage.setItem(storageId, JSON.stringify(counters));
     }, 3000);
 
@@ -41,7 +39,6 @@ export default function Main() {
   }
 
   function addCounter() {
-    console.log("*** addCounter");
     setCounters((prevCounters) => [
       ...prevCounters,
       {
@@ -85,10 +82,10 @@ export default function Main() {
     setCounters(updateCounters);
   }
 
-  function addInput(key: string, event: React.ChangeEvent<HTMLInputElement>) {
-    console.log("addInput");
-    console.log(key, event);
-
+  function addInput(
+    key: string,
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) {
     const updateCounters = counters.map((counter) => {
       if (counter.id == key) {
         return {
@@ -146,7 +143,7 @@ export default function Main() {
             handleAddSuccess={() => addSuccess(counter.id)}
             handleAddTotal={() => addTotal(counter.id)}
             handleDelCounter={() => delCoutner(counter.id)}
-            handleAddInput={() => addInput}
+            handleAddInput={addInput}
           />
         ))}
       </div>

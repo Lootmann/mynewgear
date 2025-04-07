@@ -27,11 +27,6 @@ function showSuccessPercentile(success: number, total: number) {
 }
 
 export default function Counter(props: counterProps) {
-  React.useEffect(() => {
-    console.log("*** Counter.tsx");
-    console.log(props);
-  }, []);
-
   return (
     <div className="flex border-1">
       <div className="flex flex-col justify-center px-1">
