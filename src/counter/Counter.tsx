@@ -1,21 +1,20 @@
-export type counterType = {
-  key: string;
-  total: number;
-  success: number;
-  input: string;
-};
+import React from "react";
 
 type counterProps = {
-  key: string;
+  id: string;
   total: number;
   success: number;
   input: string;
   handleAddTotal: (key: string) => void;
   handleAddSuccess: (key: string) => void;
   handleDelCounter: (key: string) => void;
+  handleAddInput: (
+    key: string,
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
 };
 
-const nubmerToString = (num: number) => {
+const numberToString = (num: number) => {
   const str = String(num);
   if (num < 10) return "00" + str;
   else if (num < 100) return "0" + str;
@@ -28,12 +27,17 @@ function showSuccessPercentile(success: number, total: number) {
 }
 
 export default function Counter(props: counterProps) {
+  React.useEffect(() => {
+    console.log("*** Counter.tsx");
+    console.log(props);
+  }, []);
+
   return (
     <div className="flex border-1">
       <div className="flex flex-col justify-center px-1">
         <div className="">
           <span className="text-xl mr-1">
-            {nubmerToString(props.success)}/{nubmerToString(props.total)}
+            {numberToString(props.success)}/{numberToString(props.total)}
           </span>
           <span className="text-xl">
             ({showSuccessPercentile(props.success, props.total)}%)
@@ -42,14 +46,14 @@ export default function Counter(props: counterProps) {
 
         <div className="flex justify-center pl-1 mb-1 gap-1">
           <button
-            onClick={() => props.handleAddSuccess(props.key)}
+            onClick={() => props.handleAddSuccess(props.id)}
             className="border-2 text-md flex-grow rounded-md font-bold
             hover:bg-green-700 hover:border-green-700"
           >
             ➕
           </button>
           <button
-            onClick={() => props.handleAddTotal(props.key)}
+            onClick={() => props.handleAddTotal(props.id)}
             className="border-2 text-md flex-grow rounded-md font-bold
             hover:bg-yellow-700 hover:border-yellow-700"
           >
@@ -63,10 +67,13 @@ export default function Counter(props: counterProps) {
         id=""
         className="flex-grow bg-neutral-200 text-neutral-800 px-1"
         placeholder="Show Me Your Combos :D"
+        value={props.input}
+        // onChange={(e) => props.handleAddInput(props.id, e)}
+        onChange={(e) => props.handleAddInput(props.id, e)}
       ></textarea>
 
       <button
-        onClick={() => props.handleDelCounter(props.key)}
+        onClick={() => props.handleDelCounter(props.id)}
         className="bg-red-600"
       >
         DEL
