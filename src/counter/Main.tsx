@@ -1,20 +1,36 @@
-import Counter, { counterType } from "./Counter";
-import { useState } from "react";
+import Counter from "./Counter";
+import React from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { CounterType } from "../types/counter";
 
 const button = `border-2 px-2 rounded-md`;
 
 export default function Main() {
-  const [counters, setCounters] = useState<counterType[]>([]);
+  // load counters from localstorage
+  const storageId = "my-awesome-counter-bro";
 
-  // TODO: you do more sophisticated.
+  const [counters, setCounters] = React.useState<CounterType[]>(() => {
+    const raw = localStorage.getItem(storageId) ?? "[]";
+    return JSON.parse(raw);
+  });
+
+  // save counters to localstorage
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      console.log("*** Save");
+      localStorage.setItem(storageId, JSON.stringify(counters));
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [counters]);
+
   function allClear() {
     const updateCounters = [];
 
     for (const counter of counters) {
       updateCounters.push({
-        key: counter.key,
+        id: counter.id,
         total: 0,
         success: 0,
         input: counter.input,
@@ -25,15 +41,21 @@ export default function Main() {
   }
 
   function addCounter() {
-    setCounters([
-      ...counters,
-      { key: uuidv4(), total: 0, success: 0, input: "" },
+    console.log("*** addCounter");
+    setCounters((prevCounters) => [
+      ...prevCounters,
+      {
+        id: uuidv4(),
+        total: 0,
+        success: 0,
+        input: "sample",
+      },
     ]);
   }
 
   function addTotal(key: string) {
     const updateCounters = counters.map((counter) => {
-      if (counter.key == key) {
+      if (counter.id == key) {
         return {
           ...counter,
           total: counter.total + 1,
@@ -49,7 +71,7 @@ export default function Main() {
 
   function addSuccess(key: string) {
     const updateCounters = counters.map((counter) => {
-      if (counter.key == key) {
+      if (counter.id == key) {
         return {
           ...counter,
           total: counter.total + 1,
@@ -63,8 +85,26 @@ export default function Main() {
     setCounters(updateCounters);
   }
 
+  function addInput(key: string, event: React.ChangeEvent<HTMLInputElement>) {
+    console.log("addInput");
+    console.log(key, event);
+
+    const updateCounters = counters.map((counter) => {
+      if (counter.id == key) {
+        return {
+          ...counter,
+          input: event.target.value,
+        };
+      } else {
+        return counter;
+      }
+    });
+
+    setCounters(updateCounters);
+  }
+
   function delCoutner(key: string) {
-    setCounters(counters.filter((counter) => counter.key != key));
+    setCounters(counters.filter((counter) => counter.id != key));
   }
 
   return (
@@ -75,9 +115,7 @@ export default function Main() {
         </Link>
 
         <button
-          onClick={() => {
-            addCounter();
-          }}
+          onClick={() => addCounter()}
           className={`${button}
           bg-green-800 border-green-800
           hover:bg-green-400 hover:border-green-400 hover:text-neutral-800
@@ -100,13 +138,15 @@ export default function Main() {
       <div className="flex flex-col gap-2">
         {counters.map((counter) => (
           <Counter
-            key={counter.key}
+            key={counter.id}
+            id={counter.id}
             input={counter.input}
             total={counter.total}
             success={counter.success}
-            handleAddSuccess={() => addSuccess(counter.key)}
-            handleAddTotal={() => addTotal(counter.key)}
-            handleDelCounter={() => delCoutner(counter.key)}
+            handleAddSuccess={() => addSuccess(counter.id)}
+            handleAddTotal={() => addTotal(counter.id)}
+            handleDelCounter={() => delCoutner(counter.id)}
+            handleAddInput={() => addInput}
           />
         ))}
       </div>
