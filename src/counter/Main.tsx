@@ -18,7 +18,7 @@ export default function Main() {
   React.useEffect(() => {
     const timer = setInterval(() => {
       localStorage.setItem(storageId, JSON.stringify(counters));
-    }, 3000);
+    }, 1500);
 
     return () => clearInterval(timer);
   }, [counters]);
