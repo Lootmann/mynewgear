@@ -132,7 +132,7 @@ export default function Main() {
         </button>
       </header>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         {counters.map((counter) => (
           <Counter
             key={counter.id}

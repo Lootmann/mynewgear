@@ -29,14 +29,14 @@ function showSuccessPercentile(success: number, total: number) {
 export default function Counter(props: counterProps) {
   return (
     <div className="flex border-1">
-      <div className="flex flex-col justify-center px-1">
-        <div className="">
-          <span className="text-xl mr-1">
+      <div className="flex flex-col justify-center px-2">
+        <div className="flex flex-col justify-center mb-1">
+          <p className="text-xl">
             {numberToString(props.success)}/{numberToString(props.total)}
-          </span>
-          <span className="text-xl">
-            ({showSuccessPercentile(props.success, props.total)}%)
-          </span>
+          </p>
+          <p className="text-xl text-center">
+            {showSuccessPercentile(props.success, props.total)}%
+          </p>
         </div>
 
         <div className="flex justify-center pl-1 mb-1 gap-1">
@@ -60,7 +60,7 @@ export default function Counter(props: counterProps) {
       <textarea
         name=""
         id=""
-        className="flex-grow bg-neutral-200 text-neutral-800 px-1"
+        className="flex-grow bg-neutral-200 text-neutral-800 text-xl px-1"
         placeholder="Show Me Your Combos :D"
         value={props.input}
         // onChange={(e) => props.handleAddInput(props.id, e)}
