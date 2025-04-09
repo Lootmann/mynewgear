@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Main from "./Main.tsx";
 import CounterMain from "./counter/Main";
+import "../src/styles/base.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
