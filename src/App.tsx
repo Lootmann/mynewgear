@@ -8,7 +8,7 @@ import "../src/styles/base.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HashRouter basename="">
-      <main className="h-full bg-neutral-900 text-neutral-200">
+      <main className="h-full bg-purple-700 text-neutral-200">
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/counter" element={<CounterMain />}></Route>
