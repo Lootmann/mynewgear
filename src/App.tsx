@@ -9,7 +9,7 @@ import "/src/styles/app.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HashRouter basename="">
-      <main className="h-full bg-neutral-300 text-neutral-200">
+      <main className="h-full bg-neutral-300 text-neutral-800">
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/counter" element={<CounterMain />}></Route>
