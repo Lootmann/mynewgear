@@ -6,4 +6,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: process.env.GITHUB_PAGES ? "/mynewgear/" : "./",
   plugins: [react(), tailwindcss()],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/index.js",
+      },
+    },
+  },
 });
