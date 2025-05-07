@@ -12,3 +12,13 @@ Using React, tailwindcss.
 - responsive CSS design
 
   - for iPhone(Chrome)
+
+## Github Branch
+
+```
+main    o
+         \
+dev       o
+           \
+feature     o
+```
