@@ -16,9 +16,9 @@ Using React, tailwindcss.
 ## Github Branch
 
 ```
-main    o
-         \
-dev       o
-           \
-feature     o
+main    o - - - - - - - o ...
+         \             /
+dev       o           o
+           \         / \
+feature     o - o - o - o - o ...
 ```
