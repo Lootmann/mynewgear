@@ -55,9 +55,14 @@ export default function Main() {
 
   return (
     <div className="p-4">
-      <header className="flex gap-4 align-middle justify-center mb-4">
+      <header className={`flex gap-4 align-middle justify-center mb-4`}>
         <Link to="/">
-          <h1 className="text-2xl">BackToBack</h1>
+          <h1
+            className={`text-2xl px-2 hover:bg-neutral-200 hover:text-neutral-900
+              rounded-md transition ease-in delay-100`}
+          >
+            BackToBack
+          </h1>
         </Link>
       </header>
 
@@ -67,7 +72,7 @@ export default function Main() {
         <div className="flex gap-4 mb-4 text-xl justify-center">
           <button
             onClick={() => setRandomCPU()}
-            className="border-2 px-3 rounded-md"
+            className={`border-2 px-3 rounded-md`}
           >
             GET CPU
           </button>
