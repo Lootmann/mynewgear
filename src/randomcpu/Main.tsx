@@ -12,32 +12,32 @@ function getRandomCPULevel(): number {
 
 function getRandomCharacter(): string {
   const characters = [
-    "Akuma",
-    "A.K.I.",
-    "Blanka",
-    "Cammy",
-    "Chun-Li",
-    "Dee",
-    "Dhalsim",
-    "Ed",
-    "E. Honda",
-    //"Elena",
-    "Guile",
-    "Jamie",
-    "JP",
-    "Juri",
-    "Kimberly",
-    "Ken",
-    "Lily",
-    "Luke",
-    "Mai",
-    "Manon",
-    "Marisa",
-    "M. Bison",
-    "Rashid",
-    "Ryu",
-    "Terry",
-    "Zangief",
+    "gouki",
+    "aki",
+    "blanka",
+    "cammy",
+    "chunli",
+    "deejay",
+    "dhalsim",
+    "ed",
+    "ehonda",
+    "elena",
+    "guile",
+    "jamie",
+    "jp",
+    "juri",
+    "kimberly",
+    "ken",
+    "lily",
+    "luke",
+    "mai",
+    "manon",
+    "marisa",
+    "vega",
+    "rashid",
+    "ryu",
+    "terry",
+    "zangief",
   ];
 
   const randomIndex = Math.floor(Math.random() * characters.length);
@@ -54,7 +54,7 @@ export default function Main() {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-neutral-900">
       <header className={`flex gap-4 align-middle justify-center mb-4`}>
         <Link to="/">
           <h1
@@ -78,11 +78,19 @@ export default function Main() {
           </button>
         </div>
 
-        <div className="flex flex-col text-2xl">
+        <div className="flex flex-col text-2xl items-center">
           {CPU ? (
             <>
-              <p>Level: {CPU.level}</p>
-              <p>Character: {CPU.character}</p>
+              <header className="flex flex-col">
+                <p>Level: {CPU.level}</p>
+                <p>Character: {CPU.character}</p>
+              </header>
+
+              <img
+                src={`./images/${CPU.character}.png`}
+                alt="logo"
+                width={"350"}
+              ></img>
             </>
           ) : (
             <>
