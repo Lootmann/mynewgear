@@ -78,15 +78,18 @@ export default function Main() {
           </button>
         </div>
 
-        <div className="flex flex-col text-2xl">
+        <div className="flex flex-col text-2xl items-center">
           {CPU ? (
             <>
-              <p>Level: {CPU.level}</p>
-              <p>Character: {CPU.character}</p>
+              <header className="flex flex-col">
+                <p>Level: {CPU.level}</p>
+                <p>Character: {CPU.character}</p>
+              </header>
+
               <img
                 src={`./images/${CPU.character}.png`}
                 alt="logo"
-                width={300}
+                width={"350"}
               ></img>
             </>
           ) : (
