@@ -105,7 +105,7 @@ export default function Main() {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-neutral-900">
       <header className="flex gap-4 align-middle justify-center mb-4">
         <Link to="/">
           <h1
