@@ -17,6 +17,10 @@ function Main() {
             <button className={button}>Link to Counter</button>
           </Link>
 
+          <Link to="/cpucounter">
+            <button className={button}>CPU Counter</button>
+          </Link>
+
           <Link to="/randomcpu">
             <button className={button}>Random CPU</button>
           </Link>
