@@ -1,12 +1,10 @@
-export type CPUCounter = {
-    id: number;
-    characterName: string;
-    rank: Rank;
-}
+export type CPUCounterType = {
+  id: number;
+  characterName: string;
+  ranks: RankType[];
+};
 
-export type Rank = {
-    lv5: [0, 0],
-    lv6: [0, 0],
-    lv7: [0, 0],
-    lv8: [0, 0],
-}
+export type RankType = {
+  key: string;
+  rank: number[];
+};

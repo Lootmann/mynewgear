@@ -1,5 +1,6 @@
 import React from "react";
-import { CPUCounter } from "../types/cpucounter";
+import { CPUCounterType } from "../types/cpucounter";
+import CPUCounter from "./CPUCounter";
 
 const characters = [
   "gouki",
@@ -31,13 +32,18 @@ const characters = [
 ];
 
 export default function Main() {
-  const [records, setRecords] = React.useState<CPUCounter[]>(() => {
-    let init: CPUCounter[] = [];
+  const [records, setRecords] = React.useState<CPUCounterType[]>(() => {
+    let init: CPUCounterType[] = [];
     characters.forEach((character, index) => {
       init.push({
         id: index,
         characterName: character,
-        rank: { lv5: [0, 0], lv6: [0, 0], lv7: [0, 0], lv8: [0, 0] },
+        ranks: [
+          { key: "lv5", rank: [0, 0] },
+          { key: "lv6", rank: [0, 0] },
+          { key: "lv7", rank: [0, 0] },
+          { key: "lv8", rank: [0, 0] },
+        ],
       });
     });
     return init;
@@ -47,15 +53,7 @@ export default function Main() {
     <div className="p-4 bg-neutral-900">
       <div className="flex flex-col gap-2">
         {records.map((record) => (
-          <div className="flex flex-col p-2 border" key={record.id}>
-            <header>
-              <h2 className="uppercase underline">{record.characterName}</h2>
-            </header>
-
-            <div>
-              <p>hoge</p>
-            </div>
-          </div>
+          <CPUCounter key={record.id} record={record} />
         ))}
       </div>
     </div>
