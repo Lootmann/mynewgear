@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { CounterType } from "../types/counter";
+import { getCounterData, saveCounterData } from "./SaveStorage";
 
 const button = `border-2 px-2 rounded-md`;
 
@@ -10,14 +11,15 @@ export default function Main() {
   // load counters from localstorage
   const storageId = "my-awesome-counter-bro";
   const [counters, setCounters] = React.useState<CounterType[]>(() => {
-    const raw = localStorage.getItem(storageId) ?? "[]";
-    return JSON.parse(raw);
+    return getCounterData(storageId);
   });
 
   // save counters to localstorage
   React.useEffect(() => {
+    saveCounterData(counters, storageId);
+
     const timer = setInterval(() => {
-      localStorage.setItem(storageId, JSON.stringify(counters));
+      saveCounterData(counters, storageId);
     }, 1500);
 
     return () => clearInterval(timer);
@@ -36,6 +38,7 @@ export default function Main() {
     }
 
     setCounters(updateCounters);
+    saveCounterData(counters, storageId);
   }
 
   function addCounter() {
@@ -45,9 +48,10 @@ export default function Main() {
         id: uuidv4(),
         total: 0,
         success: 0,
-        input: "sample",
+        input: "D;",
       },
     ]);
+    saveCounterData(counters, storageId);
   }
 
   function addTotal(key: string) {
@@ -64,6 +68,7 @@ export default function Main() {
     });
 
     setCounters(updateCounters);
+    saveCounterData(counters, storageId);
   }
 
   function addSuccess(key: string) {
@@ -80,6 +85,7 @@ export default function Main() {
     });
 
     setCounters(updateCounters);
+    saveCounterData(counters, storageId);
   }
 
   function addInput(
