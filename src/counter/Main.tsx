@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { CounterType } from "../types/counter";
 import { getCounterData, saveCounterData } from "./SaveStorage";
-import { totalmem } from "os";
 
 const button = `border-2 px-2 rounded-md`;
 
@@ -65,7 +64,7 @@ export default function Main() {
         id: uuidv4(),
         total: 0,
         success: 0,
-        input: "D;",
+        input: "",
       },
     ]);
     saveCounterData(counters, storageId);
