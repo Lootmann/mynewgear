@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { CounterType } from "../types/counter";
 import { getCounterData, saveCounterData } from "./SaveStorage";
+import { totalmem } from "os";
 
 const button = `border-2 px-2 rounded-md`;
 
@@ -25,7 +26,7 @@ export default function Main() {
     return () => clearInterval(timer);
   }, [counters]);
 
-  function allClear() {
+  function allClearCount() {
     const updateCounters = [];
 
     for (const counter of counters) {
@@ -34,6 +35,22 @@ export default function Main() {
         total: 0,
         success: 0,
         input: counter.input,
+      });
+    }
+
+    setCounters(updateCounters);
+    saveCounterData(counters, storageId);
+  }
+
+  function allClearInput() {
+    const updateCounters = [];
+
+    for (const counter of counters) {
+      updateCounters.push({
+        id: counter.id,
+        total: counter.total,
+        success: counter.success,
+        input: "",
       });
     }
 
@@ -133,13 +150,23 @@ export default function Main() {
         </button>
 
         <button
-          onClick={() => allClear()}
+          onClick={() => allClearCount()}
           className={`${button}
         bg-amber-800 border-amber-800
         hover:bg-amber-400  hover:border-amber-400 hover:text-neutral-800
         transition delay-75`}
         >
-          AllClear
+          AllClearCount
+        </button>
+
+        <button
+          onClick={() => allClearInput()}
+          className={`${button}
+        bg-blue-700 border-blue-700
+        hover:bg-blue-400  hover:border-blue-400 hover:text-neutral-800
+        transition delay-75`}
+        >
+          AllClearInput
         </button>
       </header>
 
