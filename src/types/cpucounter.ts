@@ -6,5 +6,5 @@ export type CPUCounterType = {
 
 export type RankType = {
   key: string;
-  rank: number[];
+  rank: number[]; // rank [0, 0] means Me wins and CPU wins
 };
