@@ -1,33 +1,42 @@
 import { CPUCounterType } from "../types/cpucounter";
 
-function CPUCounter({ record }: { record: CPUCounterType }) {
-  const charId = record.id;
-  const charName = record.characterName;
-
+function CPUCounter({
+  record,
+  handleCounterPlus,
+  handleCounterMinus,
+}: {
+  record: CPUCounterType;
+  handleCounterPlus: (id: number, key: string, side: "me" | "enemy") => void;
+  handleCounterMinus: (id: number, key: string, side: "me" | "enemy") => void;
+}) {
+  // when left click any rank number
   function handleLeftClick(
     e: React.MouseEvent<HTMLDivElement>,
     id: number,
-    name: string,
-    rank: string
+    rank: string,
+    side: "me" | "enemy"
   ) {
     e.preventDefault();
-    console.log(`Left: ${id} ${name} ${rank}`);
+    handleCounterPlus(id, rank, side);
   }
 
+  // when right click any rank number
   function handleRightClick(
     e: React.MouseEvent<HTMLDivElement>,
     id: number,
-    name: string,
-    rank: string
+    rank: string,
+    side: "me" | "enemy"
   ) {
     e.preventDefault();
-    console.log(`Right: ${id} ${name} ${rank}`);
+    handleCounterMinus(id, rank, side);
   }
 
   return (
     <div className="flex flex-col p-2 border" key={record.id}>
-      <header>
-        <h2 className="uppercase underline">{record.characterName}</h2>
+      <header className="mb-1">
+        <h2 className="uppercase border-b-1 border-neutral-600 text-xl">
+          {record.characterName}
+        </h2>
       </header>
 
       <div className="flex px-2 py-1 gap-4">
@@ -40,26 +49,24 @@ function CPUCounter({ record }: { record: CPUCounterType }) {
 
             <div className="flex justify-around gap-4">
               <div
-                className={`
-                  text-center grow
-                  hover:bg-green-700 bg-green-950 border border-green-700 rounded-md
-                `}
-                onClick={(e) => handleLeftClick(e, charId, charName, rank.key)}
+                className={`text-center grow hover:bg-green-700 bg-green-950
+                  border border-green-700 rounded-md`}
+                onClick={(e) => handleLeftClick(e, record.id, rank.key, "me")}
                 onContextMenu={(e) =>
-                  handleRightClick(e, charId, charName, rank.key)
+                  handleRightClick(e, record.id, rank.key, "me")
                 }
               >
                 <span className="text-2xl">{rank.rank[0]}</span>
               </div>
 
               <div
-                className={`
-                  text-center grow
-                  hover:bg-blue-700 bg-blue-950 border border-blue-700 rounded-md
-                `}
-                onClick={(e) => handleLeftClick(e, charId, charName, rank.key)}
+                className={`text-center grow hover:bg-blue-700 bg-blue-950
+                  border border-blue-700 rounded-md`}
+                onClick={(e) =>
+                  handleLeftClick(e, record.id, rank.key, "enemy")
+                }
                 onContextMenu={(e) =>
-                  handleRightClick(e, charId, charName, rank.key)
+                  handleRightClick(e, record.id, rank.key, "enemy")
                 }
               >
                 <span className="text-2xl">{rank.rank[1]}</span>
