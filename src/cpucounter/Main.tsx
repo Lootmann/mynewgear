@@ -3,7 +3,6 @@ import { CPUCounterType } from "../types/cpucounter";
 import CPUCounter from "./CPUCounter";
 
 const characters = [
-  "gouki",
   "aki",
   "blanka",
   "cammy",
@@ -13,28 +12,29 @@ const characters = [
   "ed",
   "ehonda",
   "elena",
+  "gouki",
   "guile",
   "jamie",
   "jp",
   "juri",
-  "kimberly",
   "ken",
+  "kimberly",
   "lily",
   "luke",
   "mai",
   "manon",
   "marisa",
-  "vega",
   "rashid",
   "ryu",
   "terry",
+  "vega",
   "zangief",
 ];
 
 export default function Main() {
   const [records, setRecords] = React.useState<CPUCounterType[]>(() => {
     let init: CPUCounterType[] = [];
-    characters.forEach((character, index) => {
+    characters.sort().forEach((character, index) => {
       init.push({
         id: index,
         characterName: character,
@@ -49,11 +49,72 @@ export default function Main() {
     return init;
   });
 
+  // update records (increase rank[0] or rank[1])
+  // when record.id == id and rank.key == key
+  function handleCounterPlus(id: number, key: string, side: "me" | "enemy") {
+    if (side == "me") {
+      setRecords(
+        records.map((record) => {
+          if (record.id == id) {
+            const rank = record.ranks.find((rank) => rank.key == key);
+            if (rank) rank.rank[0]++;
+          }
+
+          return record;
+        })
+      );
+    } else {
+      setRecords(
+        records.map((record) => {
+          if (record.id == id) {
+            const rank = record.ranks.find((rank) => rank.key == key);
+            if (rank) rank.rank[1]++;
+          }
+
+          return record;
+        })
+      );
+    }
+  }
+
+  // update records (decrease rank[0] or rank[1])
+  // when record.id == id and rank.key == key
+  function handleCounterMinus(id: number, key: string, side: "me" | "enemy") {
+    if (side == "me") {
+      setRecords(
+        records.map((record) => {
+          if (record.id == id) {
+            const rank = record.ranks.find((rank) => rank.key == key);
+            if (rank) rank.rank[0]--;
+          }
+
+          return record;
+        })
+      );
+    } else {
+      setRecords(
+        records.map((record) => {
+          if (record.id == id) {
+            const rank = record.ranks.find((rank) => rank.key == key);
+            if (rank) rank.rank[1]--;
+          }
+
+          return record;
+        })
+      );
+    }
+  }
+
   return (
     <div className="p-4 bg-neutral-900">
       <div className="flex flex-col gap-2">
         {records.map((record) => (
-          <CPUCounter key={record.id} record={record} />
+          <CPUCounter
+            key={record.id}
+            record={record}
+            handleCounterPlus={handleCounterPlus}
+            handleCounterMinus={handleCounterMinus}
+          />
         ))}
       </div>
     </div>
