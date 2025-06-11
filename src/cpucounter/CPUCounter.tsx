@@ -50,7 +50,7 @@ function CPUCounter({
             <div className="flex justify-around gap-4">
               <div
                 className={`text-center grow hover:bg-green-700 bg-green-950
-                  border border-green-700 rounded-md`}
+                  border border-green-700 rounded-md select-none`}
                 onClick={(e) => handleLeftClick(e, record.id, rank.key, "me")}
                 onContextMenu={(e) =>
                   handleRightClick(e, record.id, rank.key, "me")
@@ -61,7 +61,7 @@ function CPUCounter({
 
               <div
                 className={`text-center grow hover:bg-blue-700 bg-blue-950
-                  border border-blue-700 rounded-md`}
+                  border border-blue-700 rounded-md select-none`}
                 onClick={(e) =>
                   handleLeftClick(e, record.id, rank.key, "enemy")
                 }
