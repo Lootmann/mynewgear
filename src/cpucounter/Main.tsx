@@ -1,6 +1,7 @@
 import React from "react";
 import { CPUCounterType } from "../types/cpucounter";
 import CPUCounter from "./CPUCounter";
+import { loadCPUCounterData, saveCPUCounterData } from "./SaveStorage";
 
 const characters = [
   "aki",
@@ -32,22 +33,31 @@ const characters = [
 ];
 
 export default function Main() {
+  const storageId = "my-awesome-cpu-counter";
   const [records, setRecords] = React.useState<CPUCounterType[]>(() => {
-    let init: CPUCounterType[] = [];
-    characters.sort().forEach((character, index) => {
-      init.push({
-        id: index,
-        characterName: character,
-        ranks: [
-          { key: "lv5", rank: [0, 0] },
-          { key: "lv6", rank: [0, 0] },
-          { key: "lv7", rank: [0, 0] },
-          { key: "lv8", rank: [0, 0] },
-        ],
+    const init = loadCPUCounterData(storageId);
+
+    // when localstorage is empty, initialize with default values
+    if (init.length == 0) {
+      return characters.sort().map((character, index) => {
+        return {
+          id: index,
+          characterName: character,
+          ranks: [
+            { key: "lv5", rank: [0, 0] },
+            { key: "lv6", rank: [0, 0] },
+            { key: "lv7", rank: [0, 0] },
+            { key: "lv8", rank: [0, 0] },
+          ],
+        };
       });
-    });
+    }
     return init;
   });
+
+  React.useEffect(() => {
+    saveCPUCounterData(records, storageId);
+  }, [records]);
 
   // update records (increase rank[0] or rank[1])
   // when record.id == id and rank.key == key
@@ -94,6 +104,10 @@ export default function Main() {
 
   return (
     <div className="p-4 bg-neutral-900">
+      <div className="flex">
+        <h1 className="text-white text-2xl font-bold mb-4">CPUCounter</h1>
+      </div>
+
       <div className="flex flex-col gap-2">
         {records.map((record) => (
           <CPUCounter
