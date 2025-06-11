@@ -52,57 +52,44 @@ export default function Main() {
   // update records (increase rank[0] or rank[1])
   // when record.id == id and rank.key == key
   function handleCounterPlus(id: number, key: string, side: "me" | "enemy") {
-    if (side == "me") {
-      setRecords(
-        records.map((record) => {
-          if (record.id == id) {
-            const rank = record.ranks.find((rank) => rank.key == key);
-            if (rank) rank.rank[0]++;
+    setRecords(
+      records.map((record) => {
+        if (record.id == id) {
+          const rank = record.ranks.find((rank) => rank.key == key);
+          if (rank) {
+            if (side == "me") {
+              rank.rank[0]++;
+            } else {
+              rank.rank[1]++;
+            }
           }
+        }
 
-          return record;
-        })
-      );
-    } else {
-      setRecords(
-        records.map((record) => {
-          if (record.id == id) {
-            const rank = record.ranks.find((rank) => rank.key == key);
-            if (rank) rank.rank[1]++;
-          }
-
-          return record;
-        })
-      );
-    }
+        return record;
+      })
+    );
   }
 
   // update records (decrease rank[0] or rank[1])
   // when record.id == id and rank.key == key
   function handleCounterMinus(id: number, key: string, side: "me" | "enemy") {
-    if (side == "me") {
-      setRecords(
-        records.map((record) => {
-          if (record.id == id) {
-            const rank = record.ranks.find((rank) => rank.key == key);
-            if (rank) rank.rank[0]--;
-          }
+    setRecords(
+      records.map((record) => {
+        if (record.id == id) {
+          const rank = record.ranks.find((rank) => rank.key == key);
 
-          return record;
-        })
-      );
-    } else {
-      setRecords(
-        records.map((record) => {
-          if (record.id == id) {
-            const rank = record.ranks.find((rank) => rank.key == key);
-            if (rank) rank.rank[1]--;
+          if (rank) {
+            if (side == "me") {
+              if (rank.rank[0] > 0) rank.rank[0]--;
+            } else {
+              if (rank.rank[1] > 0) rank.rank[1]--;
+            }
           }
+        }
 
-          return record;
-        })
-      );
-    }
+        return record;
+      })
+    );
   }
 
   return (
