@@ -2,6 +2,7 @@ import React from "react";
 import { CPUCounterType } from "../types/cpucounter";
 import CPUCounter from "./CPUCounter";
 import { loadCPUCounterData, saveCPUCounterData } from "./SaveStorage";
+import { Link } from "react-router-dom";
 
 const characters = [
   "aki",
@@ -104,7 +105,15 @@ export default function Main() {
 
   return (
     <div className="p-4 bg-neutral-900">
-      <div className="flex">
+      <div className="flex gap-10 items-baseline">
+        <Link
+          to="/"
+          className={`text-2xl px-2 hover:bg-neutral-200 hover:text-neutral-900
+              rounded-md transition ease-in delay-100`}
+        >
+          BackToBack
+        </Link>
+
         <h1 className="text-white text-2xl font-bold mb-4">CPUCounter</h1>
       </div>
 
