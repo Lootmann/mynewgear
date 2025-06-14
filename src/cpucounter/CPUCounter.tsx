@@ -33,7 +33,7 @@ function CPUCounter({
 
   return (
     <div
-      className={`flex flex-col p-2 border hover:border-yellow-500`}
+      className={`flex flex-col p-2 border hover:border-yellow-500 hover:bg-[#1f1e1e]`}
       key={record.id}
     >
       <header className="mb-1">
