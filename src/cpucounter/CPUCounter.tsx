@@ -33,20 +33,18 @@ function CPUCounter({
 
   return (
     <div
-      className={`flex flex-col p-2 border hover:border-yellow-500 hover:bg-[#1f1e1e]`}
+      className={`flex flex-col p-2 border hover:border-yellow-500 hover:bg-[#2f2e2e]`}
       key={record.id}
     >
-      <header className="mb-1">
-        <h2 className={`uppercase text-xl border-b-1 border-neutral-600`}>
+      <div className="flex items-center px-2 py-1 gap-4">
+        <div className="capitalize w-20 text-center text-xl border-b-1 pb-1">
           {record.characterName}
-        </h2>
-      </header>
+        </div>
 
-      <div className="flex px-2 py-1 gap-4">
         {record.ranks.map((rank) => (
           <div
             className={`border flex flex-col justify-between
-              gap-1 px-1 py-1 min-w-32 hover:bg-neutral-800`}
+              gap-1 px-1 py-1 min-w-26 hover:bg-neutral-900`}
             key={rank.key}
           >
             <div className="text-center underline text-xl">{rank.key}</div>
