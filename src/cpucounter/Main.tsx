@@ -1,7 +1,11 @@
 import React from "react";
 import { CPUCounterType } from "../types/cpucounter";
 import CPUCounter from "./CPUCounter";
-import { loadCPUCounterData, saveCPUCounterData } from "./SaveStorage";
+import {
+  loadCPUCounterData,
+  saveCPUCounterData,
+  STORAGE_ID,
+} from "./SaveStorage";
 import { Link } from "react-router-dom";
 
 const characters = [
@@ -34,9 +38,8 @@ const characters = [
 ];
 
 export default function Main() {
-  const storageId = "my-awesome-cpu-counter";
   const [records, setRecords] = React.useState<CPUCounterType[]>(() => {
-    const init = loadCPUCounterData(storageId);
+    const init = loadCPUCounterData(STORAGE_ID);
 
     // when localstorage is empty, initialize with default values
     if (init.length == 0) {
@@ -57,7 +60,7 @@ export default function Main() {
   });
 
   React.useEffect(() => {
-    saveCPUCounterData(records, storageId);
+    saveCPUCounterData(records, STORAGE_ID);
   }, [records]);
 
   // update records (increase rank[0] or rank[1])

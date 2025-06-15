@@ -1,5 +1,7 @@
 import { CPUCounterType } from "../types/cpucounter";
 
+export const STORAGE_ID = "my-awesome-cpu-counter";
+
 // get CPUCounter date from localstorage
 export const loadCPUCounterData = (storageId: string): CPUCounterType[] => {
   const raw = localStorage.getItem(storageId) ?? "[]";
