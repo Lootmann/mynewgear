@@ -128,8 +128,8 @@ export default function Main() {
 
   return (
     <div className="p-4 bg-neutral-900">
-      <header className="flex gap-4 align-middle justify-center mb-4">
-        <Link to="/">
+      <header className="grid grid-cols-2 sm:flex gap-4 align-middle justify-center mb-4">
+        <Link to="/" className="">
           <h1
             className={`text-2xl px-2 hover:bg-neutral-200 hover:text-neutral-900
               rounded-md transition ease-in delay-100`}
