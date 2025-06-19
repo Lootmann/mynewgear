@@ -5,6 +5,7 @@ import Main from "./Main.tsx";
 import CounterMain from "./counter/Main";
 import RandomCPUMain from "./randomcpu/Main";
 import CPUCOunterMain from "./cpucounter/Main";
+import NewCPUCounterMain from "./newcpucounter/Main";
 import "/src/styles/base.css";
 import "/src/styles/app.css";
 
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/counter" element={<CounterMain />}></Route>
           <Route path="/randomcpu" element={<RandomCPUMain />}></Route>
           <Route path="/cpucounter" element={<CPUCOunterMain />}></Route>
+          <Route path="/newcpucounter" element={<NewCPUCounterMain />}></Route>
         </Routes>
       </main>
     </HashRouter>
