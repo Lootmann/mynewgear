@@ -1,6 +1,18 @@
 import { Link } from "react-router-dom";
+import { CHARACTERS } from "../global/characters";
+import { Capitalize } from "../utils/string";
+import React from "react";
+import { initRecords } from "./Records";
 
 export default function Main() {
+  const [records, setRecords] = React.useState(() => {
+    let rec = initRecords();
+
+    console.log(rec);
+
+    return rec;
+  });
+
   return (
     <div className="p-4 bg-neutral-900 flex flex-col items-center">
       <header className={`flex flex-col gap-4 items-center mb-4`}>
@@ -18,25 +30,31 @@ export default function Main() {
           <select
             name="me"
             id="me"
-            className={`border border-neutral-500 w-16 text-center text-xl`}
+            className={`px-1 border border-neutral-500 w-16 text-center
+              text-xl text-neutral-200 bg-neutral-950 rounded-md`}
           >
-            <option value="1">Ryu</option>
-            <option value="2">Ken</option>
-            <option value="3">A.K.I</option>
-            <option value="4">DJ</option>
-            <option value="5">Mai</option>
+            {CHARACTERS.map((char) => {
+              return (
+                <option key={char.id} value={char.id}>
+                  {Capitalize(char.name)}
+                </option>
+              );
+            })}
           </select>
 
           <select
             name="cpu"
             id="cpu"
-            className={`border border-neutral-500 w-16 text-center text-xl`}
+            className={`px-1 border border-neutral-500 w-16 text-center
+              text-xl text-neutral-200 bg-neutral-950 rounded-md`}
           >
-            <option value="1">Ryu</option>
-            <option value="2">Ken</option>
-            <option value="3">A.K.I</option>
-            <option value="4">DJ</option>
-            <option value="5">Mai</option>
+            {CHARACTERS.map((char) => {
+              return (
+                <option key={char.id} value={char.id}>
+                  {Capitalize(char.name)}
+                </option>
+              );
+            })}
           </select>
         </div>
       </header>
