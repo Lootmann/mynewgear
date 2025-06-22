@@ -2,19 +2,48 @@ import { Link } from "react-router-dom";
 import { CHARACTERS } from "../global/characters";
 import { Capitalize } from "../utils/string";
 import React from "react";
-import { initRecords } from "./Records";
+import { LevelType, RecordType } from "./Records";
+import { loadStorage } from "./Storage";
+import { ShowRecords } from "./ShowRecords";
+import { CPUCounter } from "./CPUCounter";
 
 export default function Main() {
-  const [records, setRecords] = React.useState(() => {
-    let rec = initRecords();
+  const STORAGE_ID = "new-cpu-counter-storage";
+  const [myCharId, SetMyChar] = React.useState<number | undefined>(1);
+  const [vsCharId, SetVsChar] = React.useState<number | undefined>(1);
+  const [selectedRecord, SetSelectedRecord] = React.useState<LevelType>();
 
-    console.log(rec);
-
-    return rec;
+  const [records, setRecords] = React.useState<RecordType[]>(() => {
+    return loadStorage(STORAGE_ID);
   });
 
+  // when MyChar Select box, and VSChar Select
+  React.useEffect(() => {
+    console.log("*** change mychar, vschar", myCharId, vsCharId);
+
+    // find selected all mychar record
+    const myCharRecord = records.find((rec) => rec.id == myCharId);
+    if (!myCharRecord) return;
+
+    // find mychar name
+    const myChar = CHARACTERS.find((char) => char.id == myCharId);
+    if (!myChar) return;
+
+    // find vschar name
+    const vsChar = CHARACTERS.find((char) => char.id == vsCharId);
+    if (!vsChar) return;
+
+    SetSelectedRecord(
+      (myCharRecord as { [key: string]: { [key: string]: LevelType } })[
+        myChar.name
+      ][vsChar.name]
+    );
+
+    // find selected mychar and vschar record
+  }, [myCharId, vsCharId]);
+
   return (
-    <div className="p-4 bg-neutral-900 flex flex-col items-center">
+    <div className="p-4 bg-neutral-900 flex flex-col items-center items-stretch">
       <header className={`flex flex-col gap-4 items-center mb-4`}>
         <Link to="/">
           <h1
@@ -25,12 +54,12 @@ export default function Main() {
           </h1>
         </Link>
 
-        {/* Load all characters from constant */}
         <div className="flex gap-4 justify-center items-center">
           <select
             name="me"
             id="me"
-            className={`px-1 border border-neutral-500 w-16 text-center
+            onChange={(e) => SetMyChar(Number(e.target.value))}
+            className={`px-1 border border-neutral-500 w-30 text-center
               text-xl text-neutral-200 bg-neutral-950 rounded-md`}
           >
             {CHARACTERS.map((char) => {
@@ -45,7 +74,8 @@ export default function Main() {
           <select
             name="cpu"
             id="cpu"
-            className={`px-1 border border-neutral-500 w-16 text-center
+            onChange={(e) => SetVsChar(Number(e.target.value))}
+            className={`px-1 border border-neutral-500 w-30 text-center
               text-xl text-neutral-200 bg-neutral-950 rounded-md`}
           >
             {CHARACTERS.map((char) => {
@@ -59,8 +89,14 @@ export default function Main() {
         </div>
       </header>
 
-      <div>show Records</div>
-      <div>Counter CPU Records</div>
+      {selectedRecord && <ShowRecords record={selectedRecord} />}
+      {myCharId && vsCharId && selectedRecord && (
+        <CPUCounter
+          myCharId={myCharId}
+          cpuCharId={vsCharId}
+          record={selectedRecord}
+        />
+      )}
     </div>
   );
 }
