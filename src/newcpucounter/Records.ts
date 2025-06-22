@@ -13,11 +13,12 @@ import { CHARACTERS } from "../global/characters";
 ]
 */
 type Level = "lv5" | "lv6" | "lv7" | "lv8";
-type LevelType = { [key in Level]: [number, number] };
+export type LevelType = { [key in Level]: [number, number] };
 type CharacterName = (typeof CHARACTERS)[number]["name"];
 // "dj": { lv5: [0,0], lv6: [0,0], lv7: [0,0], lv8: [0,0] },
-type CharacterType = { [key in CharacterName]: LevelType };
-type RecordType = {
+export type CharacterType = { [key in CharacterName]: LevelType };
+export type SelectedCharacterType = CharacterType;
+export type RecordType = {
   id: number;
   [key: string]: CharacterType | number;
 };
