@@ -19,7 +19,7 @@ export function ShowRecords({ record }: { record: LevelType }) {
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mb-5">
       <header className="mb-2 text-center">
         <h1>Show Records</h1>
       </header>
@@ -37,7 +37,7 @@ export function ShowRecords({ record }: { record: LevelType }) {
         <tbody className="text-xl">
           {gridRecords.map((record) => {
             return (
-              <tr className="border">
+              <tr key={record.key} className="border">
                 <td className="border px-2 text-center">
                   <span>{record.key}</span>
                 </td>
