@@ -17,6 +17,38 @@ export default function Main() {
     return loadStorage(STORAGE_ID);
   });
 
+  function PlusCounter(
+    myCharId: number,
+    cpuCharId: number,
+    player: "me" | "cpu",
+    level: "lv5" | "lv6" | "lv7" | "lv8"
+  ) {
+    setRecords(
+      records.map((record) => {
+        const myCharName = CHARACTERS.find((char) => char.id == myCharId)?.name;
+        if (!myCharName) return record;
+
+        // find vschar name
+        const cpuCharname = CHARACTERS.find(
+          (char) => char.id == cpuCharId
+        )?.name;
+        if (!cpuCharname) return record;
+
+        console.log(myCharName, cpuCharname);
+        console.log(record);
+
+        return record;
+      })
+    );
+  }
+
+  function MinusCounter(
+    myCharId: number,
+    cpuCharId: number,
+    player: "me" | "cpu",
+    level: "lv5" | "lv6" | "lv7" | "lv8"
+  ) {}
+
   // when MyChar Select box, and VSChar Select
   React.useEffect(() => {
     console.log("*** change mychar, vschar", myCharId, vsCharId);
@@ -95,6 +127,8 @@ export default function Main() {
           myCharId={myCharId}
           cpuCharId={vsCharId}
           record={selectedRecord}
+          plusCounter={PlusCounter}
+          minusCounter={MinusCounter}
         />
       )}
     </div>
