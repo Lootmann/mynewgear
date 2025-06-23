@@ -24,6 +24,10 @@ function Main() {
           <Link to="/randomcpu">
             <button className={button}>Random CPU</button>
           </Link>
+
+          <Link to="/newcpucounter">
+            <button className={button}>New CPU Counter</button>
+          </Link>
         </header>
 
         <div className="">

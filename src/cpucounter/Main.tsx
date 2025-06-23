@@ -7,35 +7,7 @@ import {
   STORAGE_ID,
 } from "./SaveStorage";
 import { Link } from "react-router-dom";
-
-const characters = [
-  "aki",
-  "blanka",
-  "cammy",
-  "chunli",
-  "deejay",
-  "dhalsim",
-  "ed",
-  "ehonda",
-  "elena",
-  "gouki",
-  "guile",
-  "jamie",
-  "jp",
-  "juri",
-  "ken",
-  "kimberly",
-  "lily",
-  "luke",
-  "mai",
-  "manon",
-  "marisa",
-  "rashid",
-  "ryu",
-  "terry",
-  "vega",
-  "zangief",
-];
+import { CHARACTERS } from "../global/characters";
 
 export default function Main() {
   const [records, setRecords] = React.useState<CPUCounterType[]>(() => {
@@ -43,10 +15,10 @@ export default function Main() {
 
     // when localstorage is empty, initialize with default values
     if (init.length == 0) {
-      return characters.sort().map((character, index) => {
+      return CHARACTERS.map((character) => {
         return {
-          id: index,
-          characterName: character,
+          id: character.id,
+          characterName: character.name,
           ranks: [
             { key: "lv5", rank: [0, 0] },
             { key: "lv6", rank: [0, 0] },
