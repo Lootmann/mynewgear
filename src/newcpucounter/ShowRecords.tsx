@@ -1,12 +1,12 @@
 import React from "react";
-import { LevelType } from "./Records";
+import { LevelDataType } from "./Records";
 
 function calcWinRate(meWins: number, cpuWins: number) {
   if (meWins + cpuWins == 0) return 0;
-  else return meWins / (meWins + cpuWins);
+  else return (meWins / (meWins + cpuWins)).toFixed(2);
 }
 
-export function ShowRecords({ record }: { record: LevelType }) {
+export function ShowRecords({ record }: { record: LevelDataType }) {
   const [gridRecords, _] = React.useState(() => {
     let conv_record = [];
     conv_record.push(
