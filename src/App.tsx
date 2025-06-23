@@ -4,7 +4,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import Main from "./Main.tsx";
 import CounterMain from "./counter/Main";
 import RandomCPUMain from "./randomcpu/Main";
-import CPUCounterMain from "./newcpucounter/Main";
+import CPUCounterMain from "./cpucounter/Main.tsx";
 import "/src/styles/base.css";
 import "/src/styles/app.css";
 
