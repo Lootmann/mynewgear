@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CHARACTERS } from "../global/characters";
 import { Capitalize } from "../utils/string";
 import React from "react";
-import { loadStorage } from "./Storage";
+import { loadStorage, saveStorage } from "./Storage";
 import { ShowRecords } from "./ShowRecords";
 import { CPUCounter } from "./CPUCounter";
 import { CharNameFindByid } from "./Records";
@@ -10,7 +10,7 @@ import { LevelDataType, LevelType, RecordType } from "../types/record";
 
 export default function Main() {
   const STORAGE_ID = "new-cpu-counter-storage";
-  const [myCharId, SetMyChar] = React.useState<number>(1);
+  const [myCharId, SetMyChar] = React.useState<number>(15);
   const [vsCharId, SetVsChar] = React.useState<number>(1);
   const [selectedRecord, setSelectedRecord] = React.useState<LevelDataType>();
   const [records, setRecords] = React.useState<RecordType>(() => {
@@ -65,9 +65,14 @@ export default function Main() {
       if (!prev[myCharName][vsCharName]) return prev;
 
       const currentRecord = prev[myCharName][vsCharName][level];
+
       const newRecord: [number, number] = [
-        player === "me" ? currentRecord[0] - 1 : currentRecord[0],
-        player === "cpu" ? currentRecord[1] - 1 : currentRecord[1],
+        player === "me" && currentRecord[0] > 0
+          ? currentRecord[0] - 1
+          : currentRecord[0],
+        player === "cpu" && currentRecord[1] > 0
+          ? currentRecord[1] - 1
+          : currentRecord[1],
       ];
 
       return {
@@ -83,10 +88,13 @@ export default function Main() {
     });
   }
 
+  React.useEffect(() => {
+    saveStorage(STORAGE_ID, records);
+  }, [records]);
+
   // when select myCharId and vsCharId
   // show Records
   React.useEffect(() => {
-    console.log(">>> useEffect", myCharId, vsCharId);
     if (!myCharId || !vsCharId) return;
     if (!(1 <= myCharId && myCharId <= CHARACTERS.length)) return;
     if (!(1 <= vsCharId && vsCharId <= CHARACTERS.length)) return;
@@ -125,6 +133,7 @@ export default function Main() {
             onChange={(e) => SetMyChar(Number(e.target.value))}
             className={`px-1 border border-neutral-500 w-30 text-center
               text-xl text-neutral-200 bg-neutral-950 rounded-md`}
+            value={myCharId}
           >
             {CHARACTERS.map((char) => {
               return (
@@ -141,6 +150,7 @@ export default function Main() {
             onChange={(e) => SetVsChar(Number(e.target.value))}
             className={`px-1 border border-neutral-500 w-30 text-center
               text-xl text-neutral-200 bg-neutral-950 rounded-md`}
+            value={vsCharId}
           >
             {CHARACTERS.map((char) => {
               return (
