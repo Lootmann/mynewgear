@@ -2,18 +2,18 @@ import { Link } from "react-router-dom";
 import { CHARACTERS } from "../global/characters";
 import { Capitalize } from "../utils/string";
 import React from "react";
-import { LevelType, RecordType } from "./Records";
 import { loadStorage } from "./Storage";
 import { ShowRecords } from "./ShowRecords";
 import { CPUCounter } from "./CPUCounter";
+import { CharNameFindByid } from "./Records";
+import { LevelDataType, LevelType, RecordType } from "../types/record";
 
 export default function Main() {
   const STORAGE_ID = "new-cpu-counter-storage";
-  const [myCharId, SetMyChar] = React.useState<number | undefined>(1);
-  const [vsCharId, SetVsChar] = React.useState<number | undefined>(1);
-  const [selectedRecord, SetSelectedRecord] = React.useState<LevelType>();
-
-  const [records, setRecords] = React.useState<RecordType[]>(() => {
+  const [myCharId, SetMyChar] = React.useState<number>(1);
+  const [vsCharId, SetVsChar] = React.useState<number>(1);
+  const [selectedRecord, setSelectedRecord] = React.useState<LevelDataType>();
+  const [records, setRecords] = React.useState<RecordType>(() => {
     return loadStorage(STORAGE_ID);
   });
 
@@ -21,58 +21,90 @@ export default function Main() {
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: "lv5" | "lv6" | "lv7" | "lv8"
+    level: LevelType
   ) {
-    setRecords(
-      records.map((record) => {
-        const myCharName = CHARACTERS.find((char) => char.id == myCharId)?.name;
-        if (!myCharName) return record;
+    if (!myCharId || !cpuCharId) return;
+    const myCharName = CharNameFindByid(myCharId);
+    const vsCharName = CharNameFindByid(vsCharId);
 
-        // find vschar name
-        const cpuCharname = CHARACTERS.find(
-          (char) => char.id == cpuCharId
-        )?.name;
-        if (!cpuCharname) return record;
+    setRecords((prev) => {
+      if (!prev[myCharName]) return prev;
+      if (!prev[myCharName][vsCharName]) return prev;
 
-        console.log(myCharName, cpuCharname);
-        console.log(record);
+      const currentRecord = prev[myCharName][vsCharName][level];
+      const newRecord: [number, number] = [
+        player === "me" ? currentRecord[0] + 1 : currentRecord[0],
+        player === "cpu" ? currentRecord[1] + 1 : currentRecord[1],
+      ];
 
-        return record;
-      })
-    );
+      return {
+        ...prev,
+        [myCharName]: {
+          ...prev[myCharName],
+          [vsCharName]: {
+            ...prev[myCharName][vsCharName],
+            [level]: newRecord,
+          },
+        },
+      };
+    });
   }
 
   function MinusCounter(
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: "lv5" | "lv6" | "lv7" | "lv8"
-  ) {}
+    level: LevelType
+  ) {
+    if (!myCharId || !cpuCharId) return;
+    const myCharName = CharNameFindByid(myCharId);
+    const vsCharName = CharNameFindByid(vsCharId);
 
-  // when MyChar Select box, and VSChar Select
+    setRecords((prev) => {
+      if (!prev[myCharName]) return prev;
+      if (!prev[myCharName][vsCharName]) return prev;
+
+      const currentRecord = prev[myCharName][vsCharName][level];
+      const newRecord: [number, number] = [
+        player === "me" ? currentRecord[0] - 1 : currentRecord[0],
+        player === "cpu" ? currentRecord[1] - 1 : currentRecord[1],
+      ];
+
+      return {
+        ...prev,
+        [myCharName]: {
+          ...prev[myCharName],
+          [vsCharName]: {
+            ...prev[myCharName][vsCharName],
+            [level]: newRecord,
+          },
+        },
+      };
+    });
+  }
+
+  // when select myCharId and vsCharId
+  // show Records
   React.useEffect(() => {
-    console.log("*** change mychar, vschar", myCharId, vsCharId);
-
-    // find selected all mychar record
-    const myCharRecord = records.find((rec) => rec.id == myCharId);
-    if (!myCharRecord) return;
-
-    // find mychar name
-    const myChar = CHARACTERS.find((char) => char.id == myCharId);
-    if (!myChar) return;
-
-    // find vschar name
-    const vsChar = CHARACTERS.find((char) => char.id == vsCharId);
-    if (!vsChar) return;
-
-    SetSelectedRecord(
-      (myCharRecord as { [key: string]: { [key: string]: LevelType } })[
-        myChar.name
-      ][vsChar.name]
-    );
+    console.log(">>> useEffect", myCharId, vsCharId);
+    if (!myCharId || !vsCharId) return;
+    if (!(1 <= myCharId && myCharId <= CHARACTERS.length)) return;
+    if (!(1 <= vsCharId && vsCharId <= CHARACTERS.length)) return;
 
     // find selected mychar and vschar record
-  }, [myCharId, vsCharId]);
+    const myCharName = CharNameFindByid(myCharId);
+    const vsCharName = CharNameFindByid(vsCharId);
+
+    setSelectedRecord(() => {
+      const myCharRecrods = records[myCharName];
+      if (!myCharRecrods) return;
+
+      const vsCharRecord = myCharRecrods[vsCharName];
+      if (!vsCharRecord) return;
+
+      return vsCharRecord;
+    });
+  }, [myCharId, vsCharId, records]);
 
   return (
     <div className="p-4 bg-neutral-900 flex flex-col items-center items-stretch">
