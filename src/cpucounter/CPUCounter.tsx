@@ -14,31 +14,35 @@ export function CPUCounter({
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: LevelType
+    level: LevelType,
+    amount: number
   ) => void;
   minusCounter: (
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: LevelType
+    level: LevelType,
+    amount: number
   ) => void;
 }) {
   function handlePlusButton(
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: LevelType
+    level: LevelType,
+    amount: number
   ) {
-    plusCounter(myCharId, cpuCharId, player, level);
+    plusCounter(myCharId, cpuCharId, player, level, amount);
   }
 
   function handleMinusButton(
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: LevelType
+    level: LevelType,
+    amount: number
   ) {
-    minusCounter(myCharId, cpuCharId, player, level);
+    minusCounter(myCharId, cpuCharId, player, level, amount);
   }
 
   const levels: LevelType[] = ["lv5", "lv6", "lv7", "lv8"];
@@ -68,7 +72,7 @@ export function CPUCounter({
                 <button
                   className="border px-1 rounded-md bg-blue-900 hover:bg-blue-400"
                   onClick={() =>
-                    handlePlusButton(myCharId, cpuCharId, "me", level)
+                    handlePlusButton(myCharId, cpuCharId, "me", level, 1)
                   }
                 >
                   ＋
@@ -76,7 +80,7 @@ export function CPUCounter({
                 <button
                   className="border px-1 rounded-md bg-green-900 hover:bg-green-500"
                   onClick={() =>
-                    handleMinusButton(myCharId, cpuCharId, "me", level)
+                    handleMinusButton(myCharId, cpuCharId, "me", level, 1)
                   }
                 >
                   －
@@ -87,7 +91,7 @@ export function CPUCounter({
                 <button
                   className="border px-1 rounded-md bg-blue-900 hover:bg-blue-400"
                   onClick={() =>
-                    handlePlusButton(myCharId, cpuCharId, "cpu", level)
+                    handlePlusButton(myCharId, cpuCharId, "cpu", level, 1)
                   }
                 >
                   ＋
@@ -95,7 +99,7 @@ export function CPUCounter({
                 <button
                   className="border px-1 rounded-md bg-green-900 hover:bg-green-500"
                   onClick={() =>
-                    handleMinusButton(myCharId, cpuCharId, "cpu", level)
+                    handleMinusButton(myCharId, cpuCharId, "cpu", level, 1)
                   }
                 >
                   －
