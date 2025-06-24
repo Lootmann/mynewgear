@@ -47,7 +47,7 @@ export function ShowRecords({ record }: { record: LevelDataType }) {
           </tr>
         </thead>
 
-        <tbody className="text-xl">
+        <tbody className="text-lg">
           {gridRecords.map((record) => {
             return (
               <tr key={record.key} className="border">
