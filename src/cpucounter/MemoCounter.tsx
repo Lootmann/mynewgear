@@ -48,34 +48,43 @@ export function MemoCounter({
   const levels: LevelType[] = ["lv5", "lv6", "lv7", "lv8"];
 
   return (
-    <div className="flex flex-col items-center mb-8 border px-1 py-2 rounded-md">
-      <header className="flex gap-4 mb-4">
-        <h1 className="border-b px-1">Memo Counter</h1>
+    <div
+      className={`grid grid-rows-1 grid-cols-2 mb-4 border
+        py-2 rounded-md mx-20`}
+    >
+      {/* left */}
+      <div className="flex flex-col items-center">
+        <header className="flex gap-4 mb-4">
+          <h1 className="border-b px-1">Memo Counter</h1>
 
-        <button
-          className={`px-2 border hover:bg-blue-400 hover:text-black rounded-md`}
-          onClick={(e) => handleAddButton(e)}
-        >
-          Adding
-        </button>
-      </header>
+          <button
+            className={`px-2 border hover:bg-blue-400 hover:text-black rounded-md`}
+            onClick={(e) => handleAddButton(e)}
+          >
+            Adding
+          </button>
+        </header>
 
-      <div className="flex gap-4 mb-2">
-        <h2 className="text-xl border-b">Level</h2>
+        <div className="flex gap-4 mb-2">
+          <div className="flex px-2 gap-6">
+            <h2 className="text-xl">Level</h2>
 
-        <select
-          className="text-xl px-2 rounded-md border"
-          onChange={(e) => setLevel(e.target.value as LevelType)}
-        >
-          {levels.map((level) => (
-            <option key={level} className="bg-neutral-950 text-white">
-              {level}
-            </option>
-          ))}
-        </select>
+            <select
+              className="text-xl px-2 bg-neutral-800 rounded-md"
+              onChange={(e) => setLevel(e.target.value as LevelType)}
+            >
+              {levels.map((level) => (
+                <option key={level} className="bg-neutral-950 text-white">
+                  {level}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div className="flex gap-4 px-4 py-2 border">
+      {/* right */}
+      <div className="flex gap-4 px-4 py-2">
         <div className="text-center">
           <p className="mb-2 text-xl">{meRecord}</p>
 
@@ -83,14 +92,14 @@ export function MemoCounter({
             <button
               onClick={() => handlePlusButton("me")}
               className={`px-1 border bg-neutral-900 hover:bg-neutral-400
-                rounded-md`}
+                rounded-md hover:text-black`}
             >
               ＋
             </button>
             <button
               onClick={() => handleMinusButton("me")}
               className={`px-1 border bg-neutral-900 hover:bg-neutral-400
-                rounded-md`}
+                rounded-md hover:text-black`}
             >
               －
             </button>
