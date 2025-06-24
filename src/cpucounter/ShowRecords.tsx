@@ -1,5 +1,5 @@
 import React from "react";
-import { LevelDataType } from "./Records";
+import { LevelDataType } from "../types/record";
 
 type showRecordType = Array<{ key: string; me: number; cpu: number }>;
 
