@@ -4,8 +4,16 @@ import { LevelDataType } from "../types/record";
 type showRecordType = Array<{ key: string; me: number; cpu: number }>;
 
 function calcWinRate(meWins: number, cpuWins: number) {
-  if (meWins + cpuWins == 0) return 0;
-  else return (meWins / (meWins + cpuWins)).toFixed(2);
+  if (meWins + cpuWins == 0) return (0.0).toFixed(2);
+  else return ((meWins * 100) / (meWins + cpuWins)).toFixed(1);
+}
+
+function sum(record: LevelDataType, side: "me" | "cpu") {
+  if (side === "me") {
+    return record.lv5[0] + record.lv6[0] + record.lv7[0] + record.lv8[0];
+  } else {
+    return record.lv5[1] + record.lv6[1] + record.lv7[1] + record.lv8[1];
+  }
 }
 
 export function ShowRecords({ record }: { record: LevelDataType }) {
@@ -17,7 +25,8 @@ export function ShowRecords({ record }: { record: LevelDataType }) {
       { key: "lv5", me: record.lv5[0], cpu: record.lv5[1] },
       { key: "lv6", me: record.lv6[0], cpu: record.lv6[1] },
       { key: "lv7", me: record.lv7[0], cpu: record.lv7[1] },
-      { key: "lv8", me: record.lv8[0], cpu: record.lv8[1] }
+      { key: "lv8", me: record.lv8[0], cpu: record.lv8[1] },
+      { key: "All", me: sum(record, "me"), cpu: sum(record, "cpu") }
     );
     setGridRecords(conv_record);
   }, [record]);
@@ -49,7 +58,7 @@ export function ShowRecords({ record }: { record: LevelDataType }) {
                   <span>{record.me + record.cpu}</span>
                 </td>
                 <td className="border px-2 text-center">
-                  <span>{calcWinRate(record.me, record.cpu)}</span>
+                  <span>{calcWinRate(record.me, record.cpu)}%</span>
                 </td>
                 <td className="border px-2 text-center">
                   <span>
