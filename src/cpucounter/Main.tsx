@@ -7,6 +7,7 @@ import { ShowRecords } from "./ShowRecords";
 import { CPUCounter } from "./CPUCounter";
 import { CharNameFindByid } from "./Records";
 import { LevelDataType, LevelType, RecordType } from "../types/record";
+import { MemoCounter } from "./MemoCounter";
 
 export default function Main() {
   const STORAGE_ID = "new-cpu-counter-storage";
@@ -21,7 +22,8 @@ export default function Main() {
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: LevelType
+    level: LevelType,
+    amount: number
   ) {
     if (!myCharId || !cpuCharId) return;
     const myCharName = CharNameFindByid(myCharId);
@@ -33,8 +35,8 @@ export default function Main() {
 
       const currentRecord = prev[myCharName][vsCharName][level];
       const newRecord: [number, number] = [
-        player === "me" ? currentRecord[0] + 1 : currentRecord[0],
-        player === "cpu" ? currentRecord[1] + 1 : currentRecord[1],
+        player === "me" ? currentRecord[0] + amount : currentRecord[0],
+        player === "cpu" ? currentRecord[1] + amount : currentRecord[1],
       ];
 
       return {
@@ -54,7 +56,8 @@ export default function Main() {
     myCharId: number,
     cpuCharId: number,
     player: "me" | "cpu",
-    level: LevelType
+    level: LevelType,
+    amount: number
   ) {
     if (!myCharId || !cpuCharId) return;
     const myCharName = CharNameFindByid(myCharId);
@@ -68,10 +71,10 @@ export default function Main() {
 
       const newRecord: [number, number] = [
         player === "me" && currentRecord[0] > 0
-          ? currentRecord[0] - 1
+          ? currentRecord[0] - amount
           : currentRecord[0],
         player === "cpu" && currentRecord[1] > 0
-          ? currentRecord[1] - 1
+          ? currentRecord[1] - amount
           : currentRecord[1],
       ];
 
@@ -163,7 +166,14 @@ export default function Main() {
         </div>
       </header>
 
+      <MemoCounter
+        myCharId={myCharId}
+        vsCharId={vsCharId}
+        plusCounter={PlusCounter}
+      />
+
       {selectedRecord && <ShowRecords record={selectedRecord} />}
+
       {myCharId && vsCharId && selectedRecord && (
         <CPUCounter
           myCharId={myCharId}
