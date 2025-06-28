@@ -8,11 +8,12 @@ import { CPUCounter } from "./CPUCounter";
 import { CharNameFindByid } from "./Records";
 import { LevelDataType, LevelType, RecordType } from "../types/record";
 import { MemoCounter } from "./MemoCounter";
+import { AllShowRecords } from "./AllShowRecords";
 
 export default function Main() {
-  const STORAGE_ID = "new-cpu-counter-storage";
+  const STORAGE_ID = "KI_IS_GREAT_SHIT_FUN_GAME_EVER";
   const [myCharId, SetMyChar] = React.useState<number>(15);
-  const [vsCharId, SetVsChar] = React.useState<number>(1);
+  const [vsCharId, SetVsChar] = React.useState<number>(0);
   const [selectedRecord, setSelectedRecord] = React.useState<LevelDataType>();
   const [records, setRecords] = React.useState<RecordType>(() => {
     return loadStorage(STORAGE_ID);
@@ -105,6 +106,7 @@ export default function Main() {
     // find selected mychar and vschar record
     const myCharName = CharNameFindByid(myCharId);
     const vsCharName = CharNameFindByid(vsCharId);
+    console.log(myCharName, vsCharName);
 
     setSelectedRecord(() => {
       const myCharRecrods = records[myCharName];
@@ -139,11 +141,13 @@ export default function Main() {
             value={myCharId}
           >
             {CHARACTERS.map((char) => {
-              return (
-                <option key={char.id} value={char.id}>
-                  {Capitalize(char.name)}
-                </option>
-              );
+              if (char.name != "all") {
+                return (
+                  <option key={char.id} value={char.id}>
+                    {Capitalize(char.name)}
+                  </option>
+                );
+              }
             })}
           </select>
 
@@ -166,22 +170,28 @@ export default function Main() {
         </div>
       </header>
 
-      <MemoCounter
-        myCharId={myCharId}
-        vsCharId={vsCharId}
-        plusCounter={PlusCounter}
-      />
+      {vsCharId == 0 ? (
+        <AllShowRecords myCharId={myCharId} record={records} />
+      ) : (
+        <>
+          <MemoCounter
+            myCharId={myCharId}
+            vsCharId={vsCharId}
+            plusCounter={PlusCounter}
+          />
 
-      {selectedRecord && <ShowRecords record={selectedRecord} />}
+          {selectedRecord && <ShowRecords record={selectedRecord} />}
 
-      {myCharId && vsCharId && selectedRecord && (
-        <CPUCounter
-          myCharId={myCharId}
-          cpuCharId={vsCharId}
-          record={selectedRecord}
-          plusCounter={PlusCounter}
-          minusCounter={MinusCounter}
-        />
+          {myCharId && vsCharId && selectedRecord && (
+            <CPUCounter
+              myCharId={myCharId}
+              cpuCharId={vsCharId}
+              record={selectedRecord}
+              plusCounter={PlusCounter}
+              minusCounter={MinusCounter}
+            />
+          )}
+        </>
       )}
     </div>
   );
