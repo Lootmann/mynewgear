@@ -1,4 +1,5 @@
 export const CHARACTERS = [
+  { id: 0, name: "all" },
   { id: 1, name: "aki" },
   { id: 2, name: "blanka" },
   { id: 3, name: "cammy" },
